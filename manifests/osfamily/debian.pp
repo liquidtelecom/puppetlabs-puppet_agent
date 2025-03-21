@@ -91,7 +91,11 @@ class puppet_agent::osfamily::debian {
         # lint:endignore
       }
 
-      $keyname = 'puppet-keyring.gpg'
+      if ('openvox' in $puppet_agent::collection) {
+        $keyname = 'openvox-keyring.gpg'
+      } else {
+        $keyname = 'puppet-keyring.gpg'
+      }
 
       apt::source { 'pc_repo':
         location => $source,

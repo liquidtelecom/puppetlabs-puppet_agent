@@ -96,7 +96,11 @@ class puppet_agent::osfamily::redhat {
 # lint:ignore:strict_indent
     $legacy_keyname = 'GPG-KEY-puppet'
     $legacy_gpg_path = "/etc/pki/rpm-gpg/RPM-${legacy_keyname}"
-    $keyname = 'GPG-KEY-puppet-20250406'
+    if ('openvox' in $puppet_agent::collection) {
+      $keyname = 'GPG-KEY-openvox.pub'
+    } else {
+      $keyname = 'GPG-KEY-puppet-20250406'
+    }
     $gpg_path = "/etc/pki/rpm-gpg/RPM-${keyname}"
     $gpg_homedir = '/root/.gnupg'
     $gpg_keys = "file://${legacy_gpg_path}
@@ -131,12 +135,15 @@ fi
       }
     }
 
-    file { $legacy_gpg_path:
-      ensure => file,
-      owner  => 0,
-      group  => 0,
-      mode   => '0644',
-      source => "puppet:///modules/puppet_agent/${legacy_keyname}",
+    if ! ('openvox' in $puppet_agent::collection) {
+
+      file { $legacy_gpg_path:
+        ensure => file,
+        owner  => 0,
+        group  => 0,
+        mode   => '0644',
+        source => "puppet:///modules/puppet_agent/${legacy_keyname}",
+      }
     }
 
     file { $gpg_path:

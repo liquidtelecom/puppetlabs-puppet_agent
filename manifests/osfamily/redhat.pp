@@ -154,12 +154,14 @@ fi
       source => "puppet:///modules/puppet_agent/${keyname}",
     }
 
-    exec { "import-${legacy_keyname}":
-      path      => '/bin:/usr/bin:/sbin:/usr/sbin',
-      command   => "/bin/bash -c '${script}' import ${gpg_homedir} ${legacy_gpg_path}",
-      unless    => "/bin/bash -c '${script}' check ${gpg_homedir} ${legacy_gpg_path}",
-      require   => File[$legacy_gpg_path],
-      logoutput => 'on_failure',
+    if ! ('openvox' in $puppet_agent::collection) {
+      exec { "import-${legacy_keyname}":
+        path      => '/bin:/usr/bin:/sbin:/usr/sbin',
+        command   => "/bin/bash -c '${script}' import ${gpg_homedir} ${legacy_gpg_path}",
+        unless    => "/bin/bash -c '${script}' check ${gpg_homedir} ${legacy_gpg_path}",
+        require   => File[$legacy_gpg_path],
+        logoutput => 'on_failure',
+      }
     }
     exec { "import-${keyname}":
       path      => '/bin:/usr/bin:/sbin:/usr/sbin',

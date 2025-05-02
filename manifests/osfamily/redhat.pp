@@ -94,6 +94,7 @@ class puppet_agent::osfamily::redhat {
     }
 
 # lint:ignore:strict_indent
+<<<<<<< HEAD
     $legacy_keyname = 'GPG-KEY-puppet'
     $legacy_gpg_path = "/etc/pki/rpm-gpg/RPM-${legacy_keyname}"
     if ('openvox' in $puppet_agent::collection) {
@@ -101,10 +102,12 @@ class puppet_agent::osfamily::redhat {
     } else {
       $keyname = 'GPG-KEY-puppet-20250406'
     }
+=======
+    $keyname = 'GPG-KEY-puppet'
+>>>>>>> main
     $gpg_path = "/etc/pki/rpm-gpg/RPM-${keyname}"
     $gpg_homedir = '/root/.gnupg'
-    $gpg_keys = "file://${legacy_gpg_path}
-  file://${gpg_path}"
+    $gpg_keys = "file://${gpg_path}"
 
     $script = @(SCRIPT/L)
 ACTION=$0
@@ -135,6 +138,7 @@ fi
       }
     }
 
+<<<<<<< HEAD
     if ! ('openvox' in $puppet_agent::collection) {
 
       file { $legacy_gpg_path:
@@ -146,6 +150,8 @@ fi
       }
     }
 
+=======
+>>>>>>> main
     file { $gpg_path:
       ensure => file,
       owner  => 0,
@@ -154,6 +160,7 @@ fi
       source => "puppet:///modules/puppet_agent/${keyname}",
     }
 
+<<<<<<< HEAD
     if ! ('openvox' in $puppet_agent::collection) {
       exec { "import-${legacy_keyname}":
         path      => '/bin:/usr/bin:/sbin:/usr/sbin',
@@ -163,6 +170,8 @@ fi
         logoutput => 'on_failure',
       }
     }
+=======
+>>>>>>> main
     exec { "import-${keyname}":
       path      => '/bin:/usr/bin:/sbin:/usr/sbin',
       command   => "/bin/bash -c '${script}' import ${gpg_homedir} ${gpg_path}",

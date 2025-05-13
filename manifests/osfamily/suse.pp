@@ -151,6 +151,7 @@ fi
               'gpgcheck'    => '1',
               'autorefresh' => '0',
               'baseurl'     => "${source}?ssl_verify=no&auth=basic&credentials=PuppetcoreCreds",
+              'gpgkey'      => "file://${gpg_path}",
               'type'        => 'rpm-md',
             }
 

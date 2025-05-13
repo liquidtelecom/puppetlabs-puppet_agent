@@ -62,7 +62,11 @@ class puppet_agent::osfamily::suse {
     case $facts['os']['release']['major'] {
       '11', '12', '15': {
         # Import the GPG key
-        $keyname         = 'GPG-KEY-puppet'
+        if ('openvox' in $puppet_agent::collection) {
+          $keyname = 'GPG-KEY-openvox.pub'
+        } else {
+          $keyname = 'GPG-KEY-puppet'
+        }
         $gpg_path        = "/etc/pki/rpm-gpg/RPM-${keyname}"
         $gpg_homedir     = '/root/.gnupg'
 

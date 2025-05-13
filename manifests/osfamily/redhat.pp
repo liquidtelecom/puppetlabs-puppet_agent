@@ -97,7 +97,7 @@ class puppet_agent::osfamily::redhat {
     if ('openvox' in $puppet_agent::collection) {
       $keyname = 'GPG-KEY-openvox.pub'
     } else {
-      $keyname = 'GPG-KEY-puppet-20250406'
+      $keyname = 'GPG-KEY-puppet'
     }
 
     $gpg_path = "/etc/pki/rpm-gpg/RPM-${keyname}"

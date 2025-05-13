@@ -102,7 +102,7 @@ class puppet_agent::osfamily::debian {
       apt::source { 'pc_repo':
         location => $source,
         repos    => regsubst($puppet_agent::collection, /core/, ''),
-        relese   => $release,
+        release  => $release,
         key      => {
           'name'   => $keyname,
           'source' => "puppet:///modules/${module_name}/${keyname}",

@@ -93,13 +93,16 @@ class puppet_agent::osfamily::debian {
 
       if ('openvox' in $puppet_agent::collection) {
         $keyname = 'openvox-keyring.gpg'
+        $release = join([downcase($facts['os']['distro']['id']),$facts['os']['distro']['release']['major']],'')
       } else {
         $keyname = 'puppet-keyring.gpg'
+        $release = $facts['os']['distro']['codename']
       }
 
       apt::source { 'pc_repo':
         location => $source,
         repos    => regsubst($puppet_agent::collection, /core/, ''),
+        relese   => $release,
         key      => {
           'name'   => $keyname,
           'source' => "puppet:///modules/${module_name}/${keyname}",

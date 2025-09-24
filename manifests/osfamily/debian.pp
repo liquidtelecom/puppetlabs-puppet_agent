@@ -110,7 +110,7 @@ class puppet_agent::osfamily::debian {
         location => $source,
         repos    => [regsubst($puppet_agent::collection, /core/, '')],
         release  => [$release],
-        keyring  => "/etc/apt/keyrings/${keyname}"
+        keyring  => "/etc/apt/keyrings/${keyname}",
         notify   => Exec['pc_repo_force'],
       }
 

@@ -99,14 +99,18 @@ class puppet_agent::osfamily::debian {
         $release = $facts['os']['distro']['codename']
       }
 
+      apt::keyring { $keyname:
+        ensure => present,
+        source => "puppet:///modules/${module_name}/${keyname}",
+        before => Apt::Source['pc_repo'],
+      }
+
       apt::source { 'pc_repo':
+        source_format => 'sources'
         location => $source,
-        repos    => regsubst($puppet_agent::collection, /core/, ''),
-        release  => $release,
-        key      => {
-          'name'   => $keyname,
-          'source' => "puppet:///modules/${module_name}/${keyname}",
-        },
+        repos    => [regsubst($puppet_agent::collection, /core/, '')],
+        release  => [$release],
+        keyring  => "/etc/apt/keyrings/${keyname}"
         notify   => Exec['pc_repo_force'],
       }
 

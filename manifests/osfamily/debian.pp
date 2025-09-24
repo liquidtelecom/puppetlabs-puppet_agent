@@ -106,7 +106,7 @@ class puppet_agent::osfamily::debian {
       }
 
       apt::source { 'pc_repo':
-        source_format => 'sources'
+        source_format => 'sources',
         location => $source,
         repos    => [regsubst($puppet_agent::collection, /core/, '')],
         release  => [$release],

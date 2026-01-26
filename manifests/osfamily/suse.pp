@@ -60,7 +60,7 @@ class puppet_agent::osfamily::suse {
 
 # lint:ignore:strict_indent
     case $facts['os']['release']['major'] {
-      '11', '12', '15': {
+      '11', '12', '15', '16': {
         # Import the GPG key
         if ('openvox' in $puppet_agent::collection) {
           $keyname = 'GPG-KEY-openvox.pub'
